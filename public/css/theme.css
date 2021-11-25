@@ -1,0 +1,100 @@
+* {
+    font-family: 'Lato', sans-serif;
+}
+
+body {
+    background: #efefef;
+}
+
+html, body, p {
+    margin: 0;
+}
+
+h1 {
+    margin-bottom: 42px;
+}
+
+.wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 800px;
+    padding: 32px;
+    border: solid 1px #cecece;
+    border-radius: 16px;
+    height: calc(100vh - 32px - 8rem);
+    background: #FFFFFF;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+#messages {
+    overflow-y: scroll;
+}
+
+#messages > .item > .body {
+    padding: 8px;
+    border-radius: 16px;
+    min-width: 500px;
+    max-width: 800px;
+    margin-bottom: 16px;
+}
+
+#messages > .item > .body > .datetime {
+    text-align: right;
+    font-size: 0.8rem;
+    font-weight: 300;
+}
+
+#messages > .item.out {
+    display: flex;
+    justify-content: end;
+}
+
+#messages > .item.in {
+    display: flex;
+    justify-content: start;
+}
+
+#messages > .item.out > .body {
+    background: #42a4dc;
+    color: white;
+}
+
+#messages > .item.in > .body {
+    background: white;
+    border: solid 1px #42a4dc;
+    color: #42a4dc;
+}
+
+.container > form {
+    width: 100%;
+    display: flex;
+    padding-top: 32px;
+}
+
+.container > form > input {
+    width: 100%;
+    margin-right: 12px;
+    padding: 12px;
+    border: solid 1px #42a4dc;
+    border-radius: 12px;
+    outline: none;
+}
+
+.container > form > button {
+    padding: 12px;
+    background: #42a4dc;
+    color: white;
+    border-radius: 12px;
+    outline: none;
+    border: none;
+    cursor: pointer;
+}
