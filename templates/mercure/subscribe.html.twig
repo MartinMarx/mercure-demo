@@ -64,7 +64,7 @@
             content.innerText = data.text
             let datetime = document.createElement("p")
             datetime.classList.add('datetime')
-            datetime.innerText = new Intl.DateTimeFormat('fr-FR', {
+            datetime.innerText = data.sender + ' – ' + new Intl.DateTimeFormat('fr-FR', {
                 dateStyle: 'short',
                 timeStyle: 'short'
             }).format(new Date(data.dateSent))
