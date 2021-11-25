@@ -25,8 +25,8 @@ class MercureController extends AbstractController
         $this->entityManager = $entityManager;
     }
 
-    #[Route('/publish', name: 'publish')]
-    public function index(Request $request): Response
+    #[Route('/publish', name: 'publish', methods: ['POST'])]
+    public function publish(Request $request): Response
     {
         // On récupère le corps de la requête
         $data = json_decode($request->getContent());
@@ -37,6 +37,7 @@ class MercureController extends AbstractController
             $data->username
         );
 
+        // On l'enregistre en db
         $this->entityManager->persist($message);
         $this->entityManager->flush();
 
@@ -46,6 +47,8 @@ class MercureController extends AbstractController
     #[Route('/subscribe', name: 'subscribe')]
     public function subscribe(Request $request): Response
     {
+        // Ici on récupère l'identifiant via l'URL, mais dans un cas concret,
+        // on récupérera plutôt le nom d'utilisateur de l'utilisateur connecté
         $username = $request->get('username', null);
 
         if (null === $username) {
@@ -55,7 +58,6 @@ class MercureController extends AbstractController
         $messages = $this->entityManager->getRepository(Message::class)->findAll();
 
         return $this->render('mercure/subscribe.html.twig', [
-            'schema_url' => Message::TOPIC_URL,
             'username'   => $username,
             'messages'   => $messages,
         ]);

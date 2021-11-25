@@ -25,14 +25,6 @@
 
 {% block javascripts %}
     <script>
-        {#const eventSource = new EventSource("{{ mercure(schema_url)|escape('js') }}");#}
-        {#eventSource.onmessage = event => {#}
-        {#    const data = JSON.parse(event.data)#}
-        {#    console.table(data);#}
-
-        {#    appendMessageToDom(data)#}
-        {#}#}
-
         async function pushMessage(data) {
             await fetch('{{ path("mercure_publish") }}', {
                 method: 'POST',

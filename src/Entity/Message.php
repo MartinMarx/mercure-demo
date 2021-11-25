@@ -2,16 +2,12 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\MessageRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: MessageRepository::class)]
-#[ApiResource(mercure: true)]
 class Message
 {
-    public const TOPIC_URL = 'https://localhost:8000/api/messages/{id}';
-
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
@@ -32,7 +28,6 @@ class Message
         $this->sender = $sender;
         $this->dateSent = new \DateTimeImmutable();
     }
-
 
     public function getId(): ?int
     {

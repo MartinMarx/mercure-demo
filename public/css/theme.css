@@ -37,6 +37,7 @@ h1 {
 
 #messages {
     overflow-y: scroll;
+    flex: 1;
 }
 
 #messages > .item > .body {
