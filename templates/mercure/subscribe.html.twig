@@ -6,10 +6,10 @@
             <h1>Démo – Mercure</h1>
             <div id="messages">
                 {% for message in messages %}
-                    <div class="item {{ message.sender == username ? 'out' : 'in' }}">
+                    <div class="item {{ message.sender == sender ? 'out' : 'in' }}">
                         <div class="body">
                             <p class="content">{{ message.text }}</p>
-                            <p class="datetime">{{ message.dateSent|format_datetime() }}</p>
+                            <p class="datetime">{{ message.sender }} – {{ message.dateSent|format_datetime() }}</p>
                         </div>
                     </div>
                 {% endfor %}
@@ -32,7 +32,7 @@
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({text: data, username: "{{ username }}"})
+                body: JSON.stringify({text: data, sender: "{{ sender }}"})
             });
         }
 
@@ -52,7 +52,7 @@
         function appendMessageToDom(data) {
             let message = document.createElement("div")
             message.classList.add('item')
-            if (data.sender === "{{ username }}") {
+            if (data.sender === "{{ sender }}") {
                 message.classList.add('out')
             } else {
                 message.classList.add('in')

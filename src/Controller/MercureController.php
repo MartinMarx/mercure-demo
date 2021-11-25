@@ -34,7 +34,7 @@ class MercureController extends AbstractController
         // On crée un nouvel object Message
         $message = new Message(
             $data->text,
-            $data->username
+            $data->sender
         );
 
         // On l'enregistre en db
@@ -49,16 +49,16 @@ class MercureController extends AbstractController
     {
         // Ici on récupère l'identifiant via l'URL, mais dans un cas concret,
         // on récupérera plutôt le nom d'utilisateur de l'utilisateur connecté
-        $username = $request->get('username', null);
+        $sender = $request->get('sender', null);
 
-        if (null === $username) {
+        if (null === $sender) {
             throw new BadRequestHttpException('You must provide a valid username');
         }
 
         $messages = $this->entityManager->getRepository(Message::class)->findAll();
 
         return $this->render('mercure/subscribe.html.twig', [
-            'username'   => $username,
+            'sender'     => $sender,
             'messages'   => $messages,
         ]);
     }
