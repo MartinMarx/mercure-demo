@@ -3,13 +3,13 @@
 {% block body %}
     <div class="wrap">
         <div class="container">
-            <h1>Démo – Mercure</h1>
+            <h1>Démo Mercure – {{ sender|upper }}</h1>
             <div id="messages">
                 {% for message in messages %}
                     <div class="item {{ message.sender == sender ? 'out' : 'in' }}">
                         <div class="body">
                             <p class="content">{{ message.text }}</p>
-                            <p class="datetime">{{ message.sender }} – {{ message.dateSent|format_datetime() }}</p>
+                            <p class="datetime">{{ message.sender|capitalize }} – {{ message.dateSent|format_datetime() }}</p>
                         </div>
                     </div>
                 {% endfor %}
