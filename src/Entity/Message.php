@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\MessageRepository;
 use Doctrine\ORM\Mapping as ORM;
 

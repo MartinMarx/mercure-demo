@@ -8,6 +8,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\Mercure\HubInterface;
+use Symfony\Component\Mercure\Update;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 
@@ -16,13 +18,16 @@ class MercureController extends AbstractController
 {
     private SerializerInterface $serializer;
     private EntityManagerInterface $entityManager;
+    private HubInterface $hub;
 
     public function __construct(
         SerializerInterface $serializer,
-        EntityManagerInterface $entityManager
+        EntityManagerInterface $entityManager,
+        HubInterface $hub
     ) {
         $this->serializer = $serializer;
         $this->entityManager = $entityManager;
+        $this->hub = $hub;
     }
 
     #[Route('/publish', name: 'publish', methods: ['POST'])]
@@ -40,6 +45,11 @@ class MercureController extends AbstractController
         // On l'enregistre en db
         $this->entityManager->persist($message);
         $this->entityManager->flush();
+
+        $this->hub->publish(new Update(
+            ['messages'],
+            $this->serializer->serialize($message, 'json')
+        ));
 
         return $this->json(json_decode($this->serializer->serialize($message, 'json')));
     }
