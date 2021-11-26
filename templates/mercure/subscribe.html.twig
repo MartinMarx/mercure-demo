@@ -25,7 +25,9 @@
 
 {% block javascripts %}
     <script>
-        const eventSource = new EventSource("{{ mercure('messages')|escape('js') }}");
+        // Le paramètre passé à la fonction mercure correspond au(x) topic(s)
+        // auxquels on souhaite s'abonner. Ici, le topic est une uri gérée par API Platform
+        const eventSource = new EventSource("{{ mercure('https://localhost:8000/api/messages/{id}')|escape('js') }}");
         eventSource.onmessage = event => {
             const data = JSON.parse(event.data)
             console.table(data);
@@ -34,7 +36,7 @@
         }
 
         async function pushMessage(data) {
-            await fetch('{{ path("mercure_publish") }}', {
+            await fetch('{{ path("api_messages_post_collection") }}', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',

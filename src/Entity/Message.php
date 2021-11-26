@@ -7,6 +7,7 @@ use App\Repository\MessageRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: MessageRepository::class)]
+#[ApiResource(mercure: true)]
 class Message
 {
     #[ORM\Id]

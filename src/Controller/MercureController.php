@@ -8,50 +8,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
-use Symfony\Component\Mercure\HubInterface;
-use Symfony\Component\Mercure\Update;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Serializer\SerializerInterface;
 
 #[Route('/mercure', name: 'mercure_')]
 class MercureController extends AbstractController
 {
-    private SerializerInterface $serializer;
     private EntityManagerInterface $entityManager;
-    private HubInterface $hub;
 
-    public function __construct(
-        SerializerInterface $serializer,
-        EntityManagerInterface $entityManager,
-        HubInterface $hub
-    ) {
-        $this->serializer = $serializer;
+    public function __construct(EntityManagerInterface $entityManager) {
         $this->entityManager = $entityManager;
-        $this->hub = $hub;
-    }
-
-    #[Route('/publish', name: 'publish', methods: ['POST'])]
-    public function publish(Request $request): Response
-    {
-        // On récupère le corps de la requête
-        $data = json_decode($request->getContent());
-
-        // On crée un nouvel object Message
-        $message = new Message(
-            $data->text,
-            $data->sender
-        );
-
-        // On l'enregistre en db
-        $this->entityManager->persist($message);
-        $this->entityManager->flush();
-
-        $this->hub->publish(new Update(
-            ['messages'],
-            $this->serializer->serialize($message, 'json')
-        ));
-
-        return $this->json(json_decode($this->serializer->serialize($message, 'json')));
     }
 
     #[Route('/subscribe', name: 'subscribe')]
